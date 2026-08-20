@@ -22,8 +22,14 @@ if (envelope && invitationButton) {
     invitationButton.style.opacity = "0";
     invitationButton.style.transition = "opacity 1s ease-in-out";
 
-    envelope.addEventListener("click", function () {
+    // Function to handle opening the envelope (works for both click and touch)
+    function handleEnvelopeOpen(e) {
         if (opened) return;
+        
+        // Prevent default mobile ghost clicks or double-firing
+        if (e.type === 'touchend') {
+            e.preventDefault();
+        }
 
         opened = true;
         envelope.classList.add("open");
@@ -55,8 +61,12 @@ if (envelope && invitationButton) {
         setTimeout(() => {
             invitationButton.style.pointerEvents = "auto";
             invitationButton.style.opacity = "1";
-        }, 7000); // 7000ms = 7 seconds of peaceful listening/reading time
-    });
+        }, 7000); 
+    }
+
+    // Bind both click and touchend for mobile reliability
+    envelope.addEventListener("click", handleEnvelopeOpen);
+    envelope.addEventListener("touchend", handleEnvelopeOpen, { passive: false });
 
     invitationButton.addEventListener("mouseenter", () => {
         invitationButton.style.transform = "translateY(-3px)";
@@ -68,18 +78,15 @@ if (envelope && invitationButton) {
 
     // Smooth transition delay before navigating to invitation details + trigger audio
     invitationButton.addEventListener("click", function (e) {
-        e.preventDefault(); // Stop instant navigation
+        e.preventDefault(); 
         const targetUrl = this.getAttribute("href");
 
-        // Try to play music when opening the invitation
         if (bgMusic) {
             bgMusic.play().catch(error => console.log("Audio play blocked or failed:", error));
         }
 
-        // Add fade-out class to body
         document.body.classList.add("fade-out");
 
-        // Wait for the transition duration (600ms) before changing pages
         setTimeout(() => {
             window.location.href = targetUrl;
         }, 600);
