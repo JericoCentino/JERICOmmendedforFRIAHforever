@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- Favicon -->
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 
@@ -5,4 +6,13 @@
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 
 <!-- Apple Devices -->
+=======
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+
+<!-- PNG Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+
+<!-- Apple Devices -->
+>>>>>>> 555b204381f2e2c7b9624cdab64a48e6879a98a0
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">

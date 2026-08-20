@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ===========================================
     1. WEDDING DATE CONFIGURATION
 =========================================== */
@@ -269,3 +270,220 @@ document.body.addEventListener('click', function playAudioOnce() {
         });
     }
 }, { once: true });
+=======
+/* ===========================================
+   1. WEDDING DATE CONFIGURATION
+=========================================== */
+// Retaining both formats / target matching December 27, 2026, 1:00 PM
+const weddingDate = new Date(2026, 11, 27, 13, 0, 0);
+const TARGET_WEDDING_DATE = weddingDate.getTime();
+
+
+/* ===========================================
+   2. ENVELOPE & SMOOTH TRANSITION
+=========================================== */
+const envelope = document.getElementById("envelope");
+const invitationButton = document.querySelector(".btn");
+
+let opened = false;
+
+if (envelope && invitationButton) {
+    invitationButton.style.pointerEvents = "none";
+    invitationButton.style.opacity = ".6";
+
+    envelope.addEventListener("click", function () {
+        if (opened) return;
+
+        opened = true;
+        envelope.classList.add("open");
+
+        invitationButton.style.pointerEvents = "auto";
+        invitationButton.style.opacity = "1";
+    });
+
+    invitationButton.addEventListener("mouseenter", () => {
+        invitationButton.style.transform = "translateY(-3px)";
+    });
+
+    invitationButton.addEventListener("mouseleave", () => {
+        invitationButton.style.transform = "translateY(0)";
+    });
+
+    // Smooth transition delay before navigating to invitation details
+    invitationButton.addEventListener("click", function (e) {
+        e.preventDefault(); // Stop instant navigation
+        const targetUrl = this.getAttribute("href");
+
+        // Add fade-out class to body
+        document.body.classList.add("fade-out");
+
+        // Wait for the transition duration (600ms) before changing pages
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 600);
+    });
+}
+
+
+/* ===========================================
+   3. DOM LOADED INITIALIZATION
+=========================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- A. DYNAMIC NAVBAR LOADER & DRAWER EVENTS ---
+    const placeholder = document.getElementById("navbar-placeholder");
+
+    if (placeholder) {
+        fetch("navbar.html")
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to load navbar.");
+                return response.text();
+            })
+            .then(html => {
+                placeholder.innerHTML = html;
+                initDrawerEvents();
+                initNavbarScroll();
+                highlightActivePage();
+            })
+            .catch(err => console.error("Error loading navbar:", err));
+    } else {
+        // If navbar is hardcoded (not loaded dynamically)
+        initDrawerEvents();
+        initNavbarScroll();
+        highlightActivePage();
+    }
+
+    // --- B. DYNAMIC COUNTDOWN TIMER ---
+    function updateCountdown() {
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+
+        if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+        const now = new Date().getTime();
+        const timeDifference = TARGET_WEDDING_DATE - now;
+
+        if (timeDifference <= 0) {
+            daysEl.textContent = "000";
+            hoursEl.textContent = "00";
+            minutesEl.textContent = "00";
+            secondsEl.textContent = "00";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        const totalSeconds = Math.floor(timeDifference / 1000);
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const totalHours = Math.floor(totalMinutes / 60);
+        const totalDays = Math.floor(totalHours / 24);
+
+        const remainingHours = totalHours % 24;
+        const remainingMinutes = totalMinutes % 60;
+        const remainingSeconds = totalSeconds % 60;
+
+        daysEl.textContent = String(totalDays).padStart(3, "0");
+        hoursEl.textContent = String(remainingHours).padStart(2, "0");
+        minutesEl.textContent = String(remainingMinutes).padStart(2, "0");
+        secondsEl.textContent = String(remainingSeconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+
+    // --- C. HERO SCROLL REVEAL BUTTON ---
+    const scrollBtn = document.getElementById("scrollBtn");
+    const mainContent = document.getElementById("mainContent");
+
+    if (scrollBtn && mainContent) {
+        scrollBtn.addEventListener("click", () => {
+            mainContent.classList.remove("content-hidden");
+            
+            const navbar = document.querySelector(".navbar");
+            if (navbar) {
+                navbar.classList.remove("transparent");
+                navbar.classList.add("scrolled");
+            }
+
+            mainContent.scrollIntoView({ behavior: "smooth" });
+        });
+    }
+});
+
+
+/* ===========================================
+   4. HELPER FUNCTIONS
+=========================================== */
+
+// Dynamic Navbar Background Change on Scroll
+function initNavbarScroll() {
+    const navbar = document.querySelector(".navbar");
+    const mainContent = document.getElementById("mainContent");
+    if (!navbar) return;
+
+    function updateNavbarStyle() {
+        const isContentRevealed = mainContent && !mainContent.classList.contains("content-hidden");
+        if (window.scrollY > 50 || isContentRevealed) {
+            navbar.classList.remove("transparent");
+            navbar.classList.add("scrolled");
+        } else {
+            navbar.classList.add("transparent");
+            navbar.classList.remove("scrolled");
+        }
+    }
+
+    window.addEventListener("scroll", updateNavbarStyle);
+    updateNavbarStyle(); // Run once on load
+}
+
+// Side Drawer Open / Close Logic
+function initDrawerEvents() {
+    const hamburgerBtn = document.querySelector(".hamburger") || document.getElementById("hamburger-btn") || document.getElementById("navToggle");
+    const closeBtn = document.querySelector(".close-btn") || document.getElementById("close-btn") || document.getElementById("closeNav");
+    const sideDrawer = document.querySelector(".side-drawer") || document.getElementById("side-drawer") || document.getElementById("navMenu");
+    const navOverlay = document.querySelector(".nav-overlay") || document.getElementById("nav-overlay") || document.getElementById("menuBackdrop");
+    const menuLinks = document.querySelectorAll(".menu-link, .drawer-links a, .nav-links a");
+    const mainContent = document.getElementById("mainContent");
+
+    function openDrawer() {
+        sideDrawer?.classList.add("active");
+        navOverlay?.classList.add("active");
+    }
+
+    function closeDrawer() {
+        sideDrawer?.classList.remove("active");
+        navOverlay?.classList.remove("active");
+    }
+
+    hamburgerBtn?.addEventListener("click", openDrawer);
+    closeBtn?.addEventListener("click", closeDrawer);
+    navOverlay?.addEventListener("click", closeDrawer);
+
+    menuLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            closeDrawer();
+            if (mainContent && mainContent.classList.contains("content-hidden")) {
+                mainContent.classList.remove("content-hidden");
+                const navbar = document.querySelector(".navbar");
+                if (navbar) {
+                    navbar.classList.remove("transparent");
+                    navbar.classList.add("scrolled");
+                }
+            }
+        });
+    });
+}
+
+// Active Nav Link Highlighting
+function highlightActivePage() {
+    const currentPath = window.location.pathname.split("/").pop() || "index.html";
+    const links = document.querySelectorAll(".drawer-links a, .nav-links a");
+
+    links.forEach(link => {
+        if (link.getAttribute("href") === currentPath) {
+            link.classList.add("active");
+        }
+    });
+}
+>>>>>>> 555b204381f2e2c7b9624cdab64a48e6879a98a0
