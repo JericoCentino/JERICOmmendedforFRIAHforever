@@ -258,8 +258,32 @@ body {
     position: relative;
     width: 500px;
     height: 380px; 
-    animation: float 3.5s ease-in-out infinite;
+    animation: float 3.5s ease-in-out infinite; 
 }
+
+.floral-decoration {
+    position: absolute;
+    width: 170px; /* Sized down slightly so they don't overpower the card */
+    height: auto;
+    z-index: 10; 
+    pointer-events: none;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+}
+
+/* Top-left: Pushed higher and slightly outward so it hugs the outer corner, clear of the inner letter text */
+.floral-top-left {
+    top: -15px;
+    left: -50px;
+    transform: rotate(-12deg);
+}
+
+/* Bottom-right: Pushed higher up into the lower corner and slightly outward */
+.floral-bottom-right {
+    bottom: -35px;
+    right: -50px;
+    transform: rotate(160deg);
+}
+
 
 #envelope {
     position: relative;
@@ -449,7 +473,7 @@ body {
 #envelope.open ~ .wedding-title,
 .hero:has(#envelope.open) .click-text,
 .hero:has(#envelope.open) .wedding-title {
-    transform: translateY(-100px);
+    transform: translateY(-150px);
 }
 
 /* Make the title and click-text darker when open for better readability */
@@ -878,7 +902,10 @@ body {
     display: none; 
 }
 
-.btn-navigate, .btn-rsvp {
+/* ===========================================
+   NAVIGATION BUTTON (Subtle style)
+=========================================== */
+.btn-navigate {
     display: inline-block;
     padding: 10px 28px;
     border: 1px solid #2b2b2b;
@@ -891,9 +918,35 @@ body {
     transition: all 0.2s ease;
 }
 
-.btn-navigate:hover, .btn-rsvp:hover {
+.btn-navigate:hover {
     background-color: #2b2b2b;
     color: #ffffff;
+}
+
+/* ===========================================
+   RSVP BUTTON (Standout style)
+=========================================== */
+.btn-rsvp {
+    display: inline-block;
+    padding: 12px 36px;
+    border: 2px solid #68131c;
+    background-color: #68131c; /* Rich burgundy to match your wedding theme */
+    color: #ffffff; /* Crisp white text for readability */
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Adds physical depth */
+    transition: all 0.3s ease;
+}
+
+.btn-rsvp:hover {
+    background-color: #520f16; /* Deeper burgundy on hover */
+    border-color: #520f16;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -980,13 +1033,14 @@ body {
 }
 
 .sponsor-image-container {
-    max-width: 240px;
+    max-width: 660px;
     margin: 0 auto;
 }
 
 .sponsor-image-container img {
     width: 100%;
     height: auto;
+    display: block;
 }
 
 .rsvp-wrapper {
@@ -1624,6 +1678,25 @@ body {
 
     .page-heading-block {
         margin-bottom: 20px;
+    }
+
+    .envelope-wrapper {
+        margin-top: 20px;
+    }
+    .floral-decoration {
+        width: 120px;
+    }
+    .floral-top-left {
+        top: -15px;
+        left: -35px;
+    }
+    .floral-bottom-right {
+        bottom: -20px;
+        right: -30px;
+    }
+
+    .sponsor-image-container {
+        max-width: 400px;
     }
 
     .page-heading-block .script-heading {
