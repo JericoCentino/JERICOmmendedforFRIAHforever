@@ -272,7 +272,7 @@ body {
 
 /* Top-left: Pushed higher and slightly outward so it hugs the outer corner, clear of the inner letter text */
 .floral-top-left {
-    top: -15px;
+    top: -30px;
     left: -50px;
     transform: rotate(-12deg);
 }
@@ -1688,7 +1688,7 @@ body {
     }
     .floral-top-left {
         top: -15px;
-        left: -35px;
+        left: -40px;
     }
     .floral-bottom-right {
         bottom: -20px;
