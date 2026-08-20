@@ -331,7 +331,7 @@ body {
 .letter p {
     font-family: 'Cinzel', serif;
     letter-spacing: 3px;
-    color: #9c8365;
+    color: #3b2a2a;
     font-size: .7rem;
     text-align: center;
     margin: 0;
@@ -341,7 +341,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.75rem;
     line-height: 1.4;
-    color: #444;
+    color: #2c2c2c;
     margin: 8px 0;
     text-align: center;
 }
