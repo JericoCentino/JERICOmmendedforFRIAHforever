@@ -6,98 +6,10 @@ const TARGET_WEDDING_DATE = weddingDate.getTime();
 
 
 /* ===========================================
-    2. ENVELOPE & SMOOTH TRANSITION
+    2. IMMEDIATE GLOBAL AUTO-TRANSLATE
 =========================================== */
-const envelope = document.getElementById("envelope");
-const invitationButton = document.querySelector(".btn");
-const bgMusic = document.getElementById('bg-music');
-const musicContainer = document.getElementById('music-player-container');
-const vinylDisc = document.getElementById('vinyl-disc');
-
-let opened = false;
-
-if (envelope && invitationButton) {
-    // Keep button hidden initially
-    invitationButton.style.pointerEvents = "none";
-    invitationButton.style.opacity = "0";
-    invitationButton.style.transition = "opacity 1s ease-in-out";
-
-    // Function to handle opening the envelope (works for both click and touch)
-    function handleEnvelopeOpen(e) {
-        if (opened) return;
-        
-        // Prevent default mobile ghost clicks or double-firing
-        if (e.type === 'touchend') {
-            e.preventDefault();
-        }
-
-        opened = true;
-        envelope.classList.add("open");
-
-        // Try to play music and start vinyl spinning immediately
-        if (bgMusic) {
-            bgMusic.play().catch(error => console.log("Audio play blocked or failed:", error));
-            if (musicContainer) {
-                musicContainer.classList.add('playing');
-            }
-        }
-
-        // WAIT 7 SECONDS before revealing the "View Invitation" button
-        setTimeout(() => {
-            invitationButton.style.pointerEvents = "auto";
-            invitationButton.style.opacity = "1";
-        }, 7000); 
-    }
-
-    // Bind both click and touchend for mobile reliability
-    envelope.addEventListener("click", handleEnvelopeOpen);
-    envelope.addEventListener("touchend", handleEnvelopeOpen, { passive: false });
-
-    invitationButton.addEventListener("mouseenter", () => {
-        invitationButton.style.transform = "translateY(-3px)";
-    });
-
-    invitationButton.addEventListener("mouseleave", () => {
-        invitationButton.style.transform = "translateY(0)";
-    });
-
-    // Smooth transition delay before navigating to invitation details + trigger audio
-    invitationButton.addEventListener("click", function (e) {
-        e.preventDefault(); 
-        const targetUrl = this.getAttribute("href");
-
-        if (bgMusic) {
-            bgMusic.play().catch(error => console.log("Audio play blocked or failed:", error));
-        }
-
-        document.body.classList.add("fade-out");
-
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 600);
-    });
-}
-
-// Vinyl Disc Click Toggle (Landing Page Only)
-if (vinylDisc) {
-    vinylDisc.addEventListener('click', () => {
-        if (bgMusic.paused) {
-            bgMusic.play();
-            musicContainer.classList.add('playing');
-        } else {
-            bgMusic.pause();
-            musicContainer.classList.remove('playing');
-        }
-    });
-}
-
-
-/* ===========================================
-    3. DOM LOADED INITIALIZATION
-=========================================== */
-document.addEventListener("DOMContentLoaded", () => {
-    
-    // --- MULTI-LANGUAGE GLOBAL AUTO-TRANSLATE LOGIC ---
+// Run instantly to catch elements as soon as they render in the DOM
+(function () {
     const userLang = navigator.language || navigator.userLanguage || "en";
 
     let clickText = "Click to Open...";
@@ -132,34 +44,118 @@ document.addEventListener("DOMContentLoaded", () => {
         btnText = "Tingnan ang Imbitasyon";
     }
 
-    // Apply all texts globally on load
-    const clickEl = document.getElementById("txt-click");
-    if (clickEl) clickEl.textContent = clickText;
+    function applyImmediateTranslations() {
+        const clickEl = document.getElementById("txt-click");
+        const titleEl = document.getElementById("txt-wedding-title");
+        const foreverEl = document.getElementById("txt-forever");
+        const dEl = document.getElementById("txt-days");
+        const hEl = document.getElementById("txt-hours");
+        const mEl = document.getElementById("txt-minutes");
+        const sEl = document.getElementById("txt-seconds");
+        const msgElement = document.getElementById("welcome-message");
+        const invitationButton = document.querySelector(".btn");
 
-    const titleEl = document.getElementById("txt-wedding-title");
-    if (titleEl) titleEl.textContent = weddingTitleText;
+        if (clickEl) clickEl.textContent = clickText;
+        if (titleEl) titleEl.textContent = weddingTitleText;
+        if (foreverEl) foreverEl.textContent = foreverText;
+        if (dEl) dEl.textContent = daysText;
+        if (hEl) hEl.textContent = hoursText;
+        if (mEl) mEl.textContent = minutesText;
+        if (sEl) sEl.textContent = secondsText;
+        if (msgElement) msgElement.textContent = messageText;
+        if (invitationButton) invitationButton.textContent = btnText;
+    }
 
-    const foreverEl = document.getElementById("txt-forever");
-    if (foreverEl) foreverEl.textContent = foreverText;
-
-    const dEl = document.getElementById("txt-days");
-    if (dEl) dEl.textContent = daysText;
-
-    const hEl = document.getElementById("txt-hours");
-    if (hEl) hEl.textContent = hoursText;
-
-    const mEl = document.getElementById("txt-minutes");
-    if (mEl) mEl.textContent = minutesText;
-
-    const sEl = document.getElementById("txt-seconds");
-    if (sEl) sEl.textContent = secondsText;
-
-    const msgElement = document.getElementById("welcome-message");
-    if (msgElement) msgElement.textContent = messageText;
-
-    if (invitationButton) invitationButton.textContent = btnText;
+    // Try applying immediately, and also listen for DOMContentLoaded just in case
+    applyImmediateTranslations();
+    document.addEventListener("DOMContentLoaded", applyImmediateTranslations);
+})();
 
 
+/* ===========================================
+    3. ENVELOPE & SMOOTH TRANSITION
+=========================================== */
+const envelope = document.getElementById("envelope");
+const invitationButton = document.querySelector(".btn");
+const bgMusic = document.getElementById('bg-music');
+const musicContainer = document.getElementById('music-player-container');
+const vinylDisc = document.getElementById('vinyl-disc');
+
+let opened = false;
+
+if (envelope && invitationButton) {
+    invitationButton.style.pointerEvents = "none";
+    invitationButton.style.opacity = "0";
+    invitationButton.style.transition = "opacity 1s ease-in-out";
+
+    function handleEnvelopeOpen(e) {
+        if (opened) return;
+        
+        if (e.type === 'touchend') {
+            e.preventDefault();
+        }
+
+        opened = true;
+        envelope.classList.add("open");
+
+        if (bgMusic) {
+            bgMusic.play().catch(error => console.log("Audio play blocked or failed:", error));
+            if (musicContainer) {
+                musicContainer.classList.add('playing');
+            }
+        }
+
+        setTimeout(() => {
+            invitationButton.style.pointerEvents = "auto";
+            invitationButton.style.opacity = "1";
+        }, 7000); 
+    }
+
+    envelope.addEventListener("click", handleEnvelopeOpen);
+    envelope.addEventListener("touchend", handleEnvelopeOpen, { passive: false });
+
+    invitationButton.addEventListener("mouseenter", () => {
+        invitationButton.style.transform = "translateY(-3px)";
+    });
+
+    invitationButton.addEventListener("mouseleave", () => {
+        invitationButton.style.transform = "translateY(0)";
+    });
+
+    invitationButton.addEventListener("click", function (e) {
+        e.preventDefault(); 
+        const targetUrl = this.getAttribute("href");
+
+        if (bgMusic) {
+            bgMusic.play().catch(error => console.log("Audio play blocked or failed:", error));
+        }
+
+        document.body.classList.add("fade-out");
+
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 600);
+    });
+}
+
+if (vinylDisc) {
+    vinylDisc.addEventListener('click', () => {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            musicContainer.classList.add('playing');
+        } else {
+            bgMusic.pause();
+            musicContainer.classList.remove('playing');
+        }
+    });
+}
+
+
+/* ===========================================
+    4. DOM LOADED INITIALIZATION
+=========================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    
     // --- A. DYNAMIC NAVBAR LOADER & DRAWER EVENTS ---
     const placeholder = document.getElementById("navbar-placeholder");
 
@@ -183,6 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- B. DYNAMIC COUNTDOWN TIMER ---
+    const weddingDateConfig = new Date(2026, 11, 27, 13, 0, 0);
+    const targetTime = weddingDateConfig.getTime();
+
     function updateCountdown() {
         const daysEl = document.getElementById("days");
         const hoursEl = document.getElementById("hours");
@@ -192,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
         const now = new Date().getTime();
-        const timeDifference = TARGET_WEDDING_DATE - now;
+        const timeDifference = targetTime - now;
 
         if (timeDifference <= 0) {
             daysEl.textContent = "000";
@@ -242,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* ===========================================
-    4. HELPER FUNCTIONS
+    5. HELPER FUNCTIONS
 =========================================== */
 
 function initNavbarScroll() {
