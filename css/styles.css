@@ -325,10 +325,10 @@ body {
 
 .letter {
     position: absolute;
-    left: 5%;
-    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px); 
     width: 90%;
-    min-height: 280px;
+    min-height: 260px;
     background: #fff;
     border-radius: 8px;
     display: flex;
@@ -337,7 +337,6 @@ body {
     align-items: center;
     gap: 8px;
     z-index: 2;
-    transform: translateY(10px); 
     transition: transform .8s ease, z-index .8s ease;
     box-shadow: 0 8px 18px rgba(0, 0, 0, .12);
     padding: 20px;
@@ -415,7 +414,7 @@ body {
 }
 
 #envelope.open .letter {
-    transform: translateY(-90px); 
+    transform: translateX(-50%) translateY(-90px);
     z-index: 8;
 }
 
@@ -473,7 +472,7 @@ body {
 #envelope.open ~ .wedding-title,
 .hero:has(#envelope.open) .click-text,
 .hero:has(#envelope.open) .wedding-title {
-    transform: translateY(-150px);
+    transform: translateY(-100px);
 }
 
 /* Make the title and click-text darker when open for better readability */
@@ -1401,7 +1400,7 @@ body {
 
 
 /* =======================================
-   RESPONSIVE MEDIA QUERIES
+    RESPONSIVE MEDIA QUERIES
 ======================================= */
 
 /* --- NAVBAR BREAKPOINT (Screens 900px and below) --- */
@@ -1430,46 +1429,40 @@ body {
 
 /* --- TABLETS & MEDIUM MOBILE (768px and below) --- */
 @media (max-width: 768px) {
-    .click-text {
-        font-size: 0.85rem;
-    }
-
-    .wedding-title {
-        font-size: 1.2rem;
-        letter-spacing: 4px;
-        margin-bottom: 25px;
-    }
-
     .envelope-wrapper {
-        width: 360px;
-        height: 240px;
+        width: 90%;
+        max-width: 340px;
+        height: 265px;
         animation: float 3.5s ease-in-out infinite;
     }
 
     .flap {
-        border-top: 120px solid #e4d2bb; 
-        border-left: 180px solid transparent;
-        border-right: 180px solid transparent;
+        border-top: 135px solid #e4d2bb; 
+        border-left: 175px solid transparent;
+        border-right: 175px solid transparent;
     }
 
     #envelope::after {
-        border-top: 120px solid transparent;
-        border-left: 180px solid #ccb292;
-        border-right: 180px solid #ccb292;
-        border-bottom: 120px solid #ccb292;
+        border-top: 135px solid transparent; 
+        border-left: 175px solid #ccb292;
+        border-right: 175px solid #ccb292;
+        border-bottom: 135px solid #ccb292;
     }
 
     .letter {
-        min-height: 200px;
-        transform: translateY(15px);
+        min-height: 170px;
+        transform: translateX(-50%) translateY(10px);
     }
 
     #envelope.open .letter {
-        transform: translateY(-20px);
+        transform: translateX(-50%) translateY(-80px);
     }
 
-    .letter h1 {
-        font-size: 2.2rem;
+    #envelope.open ~ .click-text,
+    #envelope.open ~ .wedding-title,
+    .hero:has(#envelope.open) .click-text,
+    .hero:has(#envelope.open) .wedding-title {
+        transform: translateY(-80px);
     }
 
     .countdown h2 {
@@ -1683,13 +1676,16 @@ body {
     .envelope-wrapper {
         margin-top: 20px;
     }
+    
     .floral-decoration {
         width: 120px;
     }
+    
     .floral-top-left {
         top: -15px;
         left: -40px;
     }
+    
     .floral-bottom-right {
         bottom: -20px;
         right: -30px;
@@ -1721,31 +1717,39 @@ body {
     }
 
     .envelope-wrapper {
-        width: 300px;
-        height: 200px;
+        width: 100%;
+        max-width: 320px;
+        height: 260px;
         animation: float 3.5s ease-in-out infinite;
     }
 
     .flap {
-        border-top: 100px solid #e4d2bb; 
-        border-left: 150px solid transparent;
-        border-right: 150px solid transparent;
+        border-top: 130px solid #e4d2bb; 
+        border-left: 160px solid transparent;
+        border-right: 160px solid transparent;
     }
 
     #envelope::after {
-        border-top: 100px solid transparent; 
-        border-left: 150px solid #ccb292;
-        border-right: 150px solid #ccb292;
-        border-bottom: 100px solid #ccb292;
+        border-top: 130px solid transparent; 
+        border-left: 160px solid #ccb292;
+        border-right: 160px solid #ccb292;
+        border-bottom: 130px solid #ccb292;
     }
 
     .letter {
-        min-height: 180px;
-        transform: translateY(10px);
+        min-height: 120px;
+        transform: translateX(-50%) translateY(5px); 
     }
 
     #envelope.open .letter {
-        transform: translateY(-10px);
+        transform: translateX(-50%) translateY(-50px);
+    }
+
+    #envelope.open ~ .click-text,
+    #envelope.open ~ .wedding-title,
+    .hero:has(#envelope.open) .click-text,
+    .hero:has(#envelope.open) .wedding-title {
+        transform: translateY(-80px);
     }
 
     .letter h1 {
