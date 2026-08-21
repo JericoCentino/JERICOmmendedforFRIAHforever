@@ -42,72 +42,6 @@ if (envelope && invitationButton) {
             }
         }
 
-        // --- MULTI-LANGUAGE LANDING PAGE & WELCOME MESSAGE LOGIC ---
-        const userLang = navigator.language || navigator.userLanguage || "en";
-
-        // Default English text
-        let messageText = "We are so grateful to have you in our lives. Thank you for being a vital part of our journey and for sharing this special moment with us.";
-        let clickText = "Click to Open...";
-        let weddingTitleText = "WE'RE GETTING MARRIED";
-        let btnText = "View Invitation";
-        let foreverText = "forever starts soon";
-        let daysText = "Days";
-        let hoursText = "Hours";
-        let minutesText = "Minutes";
-        let secondsText = "Seconds";
-
-        if (userLang.startsWith('el')) {
-            // Greek Translations
-            messageText = "Είμαστε τόσο ευγνώμονες που σας έχουμε στη ζωή μας. Σας ευχαριστούμε που είστε ένα σημαντικό κομμάτι του ταξιδιού μας και που μοιράζεστε αυτή την ξεχωριστή στιγμή μαζί μας.";
-            clickText = "ΚΑΝΤΕ ΚΛΙΚ ΓΙΑ ΑΝΟΙΓΜΑ...";
-            weddingTitleText = "ΠΑΝΤΡΕΥΟΜΑΣΤΕ";
-            btnText = "Προβολή Πρόσκλησης";
-            foreverText = "το παντοτινό ξεκινά σύντομα";
-            daysText = "Ημέρες";
-            hoursText = "Ώρες";
-            minutesText = "Λεπτά";
-            secondsText = "Δευτερόλεπτα";
-
-        } else if (userLang.startsWith('tl') || userLang.startsWith('fil')) {
-            // Tagalog Translations
-            messageText = "Lubos kaming nagpapasalamat na bahagi kayo ng aming buhay. Salamat sa pagiging mahalagang bahagi ng aming paglalakbay at sa pagbabahagi ng espesyal na sandaling ito kasama namin.";
-            clickText = "I-click para Buksan...";
-            weddingTitleText = "KAMI AY MAGPAPAKASAL";
-            btnText = "Tingnan ang Imbitasyon";
-            foreverText = "magsisimula na ang walang hanggan";
-            daysText = "Araw";
-            hoursText = "Oras";
-            minutesText = "Minuto";
-            secondsText = "Segundo";
-        }
-
-        // Apply texts to elements safely
-        const msgElement = document.getElementById("welcome-message");
-        if (msgElement) msgElement.textContent = messageText;
-
-        const clickEl = document.getElementById("txt-click");
-        if (clickEl) clickEl.textContent = clickText;
-
-        const titleEl = document.getElementById("txt-wedding-title");
-        if (titleEl) titleEl.textContent = weddingTitleText;
-
-        if (invitationButton) invitationButton.textContent = btnText;
-
-        const foreverEl = document.getElementById("txt-forever");
-        if (foreverEl) foreverEl.textContent = foreverText;
-
-        const dEl = document.getElementById("txt-days");
-        if (dEl) dEl.textContent = daysText;
-
-        const hEl = document.getElementById("txt-hours");
-        if (hEl) hEl.textContent = hoursText;
-
-        const mEl = document.getElementById("txt-minutes");
-        if (mEl) mEl.textContent = minutesText;
-
-        const sEl = document.getElementById("txt-seconds");
-        if (sEl) sEl.textContent = secondsText;
-
         // WAIT 7 SECONDS before revealing the "View Invitation" button
         setTimeout(() => {
             invitationButton.style.pointerEvents = "auto";
@@ -163,6 +97,69 @@ if (vinylDisc) {
 =========================================== */
 document.addEventListener("DOMContentLoaded", () => {
     
+    // --- MULTI-LANGUAGE GLOBAL AUTO-TRANSLATE LOGIC ---
+    const userLang = navigator.language || navigator.userLanguage || "en";
+
+    let clickText = "Click to Open...";
+    let weddingTitleText = "WE'RE GETTING MARRIED";
+    let foreverText = "forever starts soon";
+    let daysText = "Days";
+    let hoursText = "Hours";
+    let minutesText = "Minutes";
+    let secondsText = "Seconds";
+    let messageText = "We are so grateful to have you in our lives. Thank you for being a vital part of our journey and for sharing this special moment with us.";
+    let btnText = "View Invitation";
+
+    if (userLang.startsWith('el')) {
+        clickText = "ΚΑΝΤΕ ΚΛΙΚ ΓΙΑ ΑΝΟΙΓΜΑ...";
+        weddingTitleText = "ΠΑΝΤΡΕΥΟΜΑΣΤΕ";
+        foreverText = "το παντοτινό ξεκινά σύντομα";
+        daysText = "Ημέρες";
+        hoursText = "Ώρες";
+        minutesText = "Λεπτά";
+        secondsText = "Δευτερόλεπτα";
+        messageText = "Είμαστε τόσο ευγνώμονες που σας έχουμε στη ζωή μας. Σας ευχαριστούμε που είστε ένα σημαντικό κομμάτι του ταξιδιού μας και που μοιράζεστε αυτή την ξεχωριστή στιγμή μαζί μας.";
+        btnText = "Προβολή Πρόσκλησης";
+    } else if (userLang.startsWith('tl') || userLang.startsWith('fil')) {
+        clickText = "I-click para Buksan...";
+        weddingTitleText = "KAMI AY MAGPAPAKASAL";
+        foreverText = "magsisimula na ang walang hanggan";
+        daysText = "Araw";
+        hoursText = "Oras";
+        minutesText = "Minuto";
+        secondsText = "Segundo";
+        messageText = "Lubos kaming nagpapasalamat na bahagi kayo ng aming buhay. Salamat sa pagiging mahalagang bahagi ng aming paglalakbay at sa pagbabahagi ng espesyal na sandaling ito kasama namin.";
+        btnText = "Tingnan ang Imbitasyon";
+    }
+
+    // Apply all texts globally on load
+    const clickEl = document.getElementById("txt-click");
+    if (clickEl) clickEl.textContent = clickText;
+
+    const titleEl = document.getElementById("txt-wedding-title");
+    if (titleEl) titleEl.textContent = weddingTitleText;
+
+    const foreverEl = document.getElementById("txt-forever");
+    if (foreverEl) foreverEl.textContent = foreverText;
+
+    const dEl = document.getElementById("txt-days");
+    if (dEl) dEl.textContent = daysText;
+
+    const hEl = document.getElementById("txt-hours");
+    if (hEl) hEl.textContent = hoursText;
+
+    const mEl = document.getElementById("txt-minutes");
+    if (mEl) mEl.textContent = minutesText;
+
+    const sEl = document.getElementById("txt-seconds");
+    if (sEl) sEl.textContent = secondsText;
+
+    const msgElement = document.getElementById("welcome-message");
+    if (msgElement) msgElement.textContent = messageText;
+
+    if (invitationButton) invitationButton.textContent = btnText;
+
+
     // --- A. DYNAMIC NAVBAR LOADER & DRAWER EVENTS ---
     const placeholder = document.getElementById("navbar-placeholder");
 
