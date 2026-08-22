@@ -42,6 +42,16 @@ const TARGET_WEDDING_DATE = weddingDate.getTime();
         secondsText = "Segundo";
         messageText = "Lubos kaming nagpapasalamat na bahagi kayo ng aming buhay. Salamat sa pagiging mahalagang bahagi ng aming paglalakbay at sa pagbabahagi ng espesyal na sandaling ito kasama namin.";
         btnText = "Tingnan ang Imbitasyon";
+    } else if (userLang.startsWith('bg')) {
+        clickText = "Щракнете, за да отворите...";
+        weddingTitleText = "НИЕ СКЛЮЧВАМЕ БРАК";
+        foreverText = "вечността започва скоро";
+        daysText = "Дни";
+        hoursText = "Часа";
+        minutesText = "Минути";
+        secondsText = "Секунди";
+        messageText = "Изключително благодарни сме, че сте в живота ни. Благодарим ви, че сте жизненоважна част от нашия път и че споделяте този специален момент с нас.";
+        btnText = "Вижте поканата";
     }
 
     function applyImmediateTranslations() {
@@ -70,7 +80,6 @@ const TARGET_WEDDING_DATE = weddingDate.getTime();
     applyImmediateTranslations();
     document.addEventListener("DOMContentLoaded", applyImmediateTranslations);
 })();
-
 
 /* ===========================================
     3. ENVELOPE & SMOOTH TRANSITION
